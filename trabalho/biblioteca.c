@@ -8,6 +8,8 @@
 typedef struct {
     char titulo[TAM_STRING];
     char autor[TAM_STRING];
+    char genero[TAM_STRING];
+    char saga[TAM_STRING];
     float nota;
 } livro;
 
@@ -19,7 +21,7 @@ void mostrarLivros(FILE *arquivo)
 
     printf("\n--- Livros Registrados ---\n");
     while (fread(&l, sizeof(livro), 1, arquivo) == 1) {
-        printf("Título: %s\nAutor: %s\nNota: %.2f\n\n", l.titulo, l.autor, l.nota);
+        printf("Título: %s\nSaga-Volume: %s\nAutor: %s\nGênero literario: %s\nNota: %.2f\n\n", l.titulo, l.saga, l.autor, l.genero, l.nota);
     }
 }
 
@@ -32,9 +34,17 @@ void registrarlivro(FILE *arquivo)
     fgets(l.titulo, TAM_STRING, stdin);
     l.titulo[strcspn(l.titulo, "\n")] = '\0';
 
+    printf("Saga-volume: ");
+    fgets(l.saga, TAM_STRING, stdin);
+    l.saga[strcspn(l.saga, "\n")] = '\0';
+
     printf("Autor do livro: ");
     fgets(l.autor, TAM_STRING, stdin);
     l.autor[strcspn(l.autor, "\n")] = '\0';
+
+    printf("Gênero literario: ");
+    fgets(l.genero, TAM_STRING, stdin);
+    l.genero[strcspn(l.genero, "\n")] = '\0';
 
     printf("Nota do livro (0 a 10): ");
     scanf("%f", &l.nota);
@@ -53,7 +63,7 @@ void listarFavoritos(FILE *arquivo)
     printf("\n--- Livros Favoritos (nota > 8) ---\n");
     while (fread(&l, sizeof(livro), 1, arquivo) == 1) {
         if (l.nota > 8.0) {
-            printf("Título: %s\nAutor: %s\nNota: %.2f\n\n", l.titulo, l.autor, l.nota);
+            printf("Título: %s\n Saga-Volume: %s\nAutor: %s\nNota: %.2f\n\n", l.titulo, l.saga, l.autor, l.nota);
         }
     }
 }
